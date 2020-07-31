@@ -1,22 +1,19 @@
 package com.jojoidu.book.springboot.domain.posts;
 
+
 import lombok.Builder;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-
+import javax.persistence.*;
 
 // Tip : 어노테이션의 순서 : 주요 어노테이션을 클래스에 가깝게 둔다. 이러면 이후 새로운 언어 전환을 할 경우 필수가 아닌 어노테이션(여기서는 lombok의 어노테이션인 @Getter와 @NoArgsConstructor)을 쉽게 삭제할 수 있따.
+// @Getter : 클래스 내 모든 필드의 Getter 메소드를 자동생성
+// @NoArgsConstructor : 기본 생성자 자동 추가. public Posts(){}와 같은 효과
+//  @Entity : 테이블과 링크될 클래스를 나타냄. 기본값으로 클래스의 카멜케이스 이름을 언더코어 네이밍(_)으로 테이블 이름을 매칭한다. ex) SalesManager.java -> sales_manager table
 @Getter
-@NoArgsConstructor // @NoArgsConstructor : 기본 생성자 자동 추가. public Posts(){}와 같은 효과
-@Entity //  @Entity : 테이블과 링크될 클래스를 나타냄. 기본값으로 클래스의 카멜케이스 이름을 언더코어 네이밍(_)으로 테이블 이름을 매칭한다. ex) SalesManager.java -> sales_manager table
+@NoArgsConstructor
+@Entity
 public class Posts {
     /*
     Posts 클래스 : 실제 DB의 테이블과 매칭될 클래스 = Entity 클래스
@@ -34,7 +31,7 @@ public class Posts {
     타입을 TEXT로 변경하고 싶거나(ex.content) 등의 경우에 사용한다.
      */
 
-    @Column(length=500,nullable = false)
+    @Column(length = 500, nullable = false)
     private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
@@ -42,8 +39,9 @@ public class Posts {
 
     private String author;
 
+    // @Builder 해당 클래스의 빌더 패턴 클래스 생성. 생성자 상단에 선언시 생성자에 포함된 필드만 빌더에 포함
     @Builder
-    public Posts(String title, String content, String author){
+    public Posts(String title, String content, String author) {
         this.title = title;
         this.content = content;
         this.author = author;
